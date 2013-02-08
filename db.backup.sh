@@ -43,7 +43,7 @@ H=$(($DIFF_TIME/3600))
 M=$(($DIFF_TIME%3600/60))
 S=$(($DIFF_TIME%60))
 
-TWT_MSG="$DATE_EXEC+|+$DB_NAME+($FILESIZE_MAIN)+in+$H+hour(s)+$M+minute(s)+$S+seconds"
+TWT_MSG="$DATE_EXEC+|+$DB_NAME+($FILESIZE)+in+$H+hour(s)+$M+minute(s)+$S+seconds"
 
 echo "Done: "$TWT_MSG
 
