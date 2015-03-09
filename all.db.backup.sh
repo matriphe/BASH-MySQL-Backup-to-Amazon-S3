@@ -25,7 +25,7 @@ echo "["$DATE_EXEC_H"] Backup process start.. "
 
 for DB_NAME in $(MYSQL_PWD=$DB_PSWD mysql -u $DB_USER -P $DB_PORT -e 'show databases' | sed 1d)
 do
-    if [ $DB_NAME != 'information_schema' ] && [ $DB_NAME  != 'performance_schema' ] && [ $DB_NAME != '' ]
+    if [ $DB_NAME != 'information_schema' ] && [ $DB_NAME  != 'performance_schema' ] && [ $DB_NAME != 'test' ] && [ $DB_NAME != 'mysql' ]
     then
         START_TIME="$(date +"%s")"
 
@@ -36,7 +36,7 @@ do
         FILESIZE="$(ls -lah $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz | awk '{print $5}')"
 
         echo "Send "$DB_NAME" to Amazon S3..."
-        s3cmd --acl-private --delete-removed sync $DUMP_LOC/ $S3_BUCKET
+        s3cmd --acl-private --delete-removed --skip-existing --no-preserve sync $DUMP_LOC/ $S3_BUCKET
 
         END_TIME="$(date +"%s")"
         DIFF_TIME=$(( $END_TIME - $START_TIME ))
