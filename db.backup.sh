@@ -34,14 +34,15 @@ FILESIZE="$(ls -lah $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz | awk '{print $5}')"
 echo "Sending to Amazon S3..."
 s3cmd --acl-private --delete-removed sync $DUMP_LOC/ $S3_BUCKET
 
-echo "Removing old files..."
-find $DUMP_LOC/*.sql.gz -mtime +$DAYS_OLD -exec rm {} \;
 
 END_TIME="$(date +"%s")"
 DIFF_TIME=$(( $END_TIME - $START_TIME ))
 H=$(($DIFF_TIME/3600))
 M=$(($DIFF_TIME%3600/60))
 S=$(($DIFF_TIME%60))
+
+echo "Removing old files..."
+find $DUMP_LOC/*.sql.gz -mtime +$DAYS_OLD -exec rm {} \;
 
 TWT_MSG="$DATE_EXEC+|+$DB_NAME+($FILESIZE)+in+$H+hour(s)+$M+minute(s)+$S+seconds"
 
