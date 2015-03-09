@@ -5,18 +5,18 @@ DB_NAME='your_database_name'
 DB_USER='your_mysql_user' # Make sure have privileges with lock tables
 DB_PSWD='your_mysql_password'
 DB_HOST='localhost'
+DB_PORT='3306'
 
 # S3 bucket where the file will be stored, please use trailing slash
 S3_BUCKET='s3://your.bucket/path/'
 
 # Temporary local place for backup
 DUMP_LOC='/path/to/save/backup'
-DUMP_LOG='/path/to/log/backup'
 
 # How long the backup in local will be kept
 DAYS_OLD="3"
 
-# Logging 
+# Logging
 START_TIME="$(date +"%s")"
 DATE_BAK="$(date +"%Y-%m-%d")"
 DATE_EXEC="$(date "+%d+%b")"
@@ -25,8 +25,8 @@ DATE_EXEC_H="$(date "+%d %b %Y %H:%M")"
 # Output for checking
 echo "["$DATE_EXEC_H"] Backup process start.. "
 
-echo "Backing up "$DB_NAME"..." 
-mysqldump --add-drop-table --lock-tables=true -u $DB_USER -p$DB_PSWD -h $DB_SLAVE $DB_NAME | gzip -9 > $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz
+echo "Backing up "$DB_NAME"..."
+mysqldump --add-drop-table --lock-tables=true -u $DB_USER -p$DB_PSWD -h $DB_HOST -P $DB_PORT $DB_NAME | gzip -9 > $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz
 
 # Counting filezie
 FILESIZE="$(ls -lah $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz | awk '{print $5}')"
