@@ -26,7 +26,7 @@ DATE_EXEC_H="$(date "+%d %b %Y %H:%M")"
 echo "["$DATE_EXEC_H"] Backup process start.. "
 
 echo "Backing up "$DB_NAME"..."
-mysqldump --add-drop-table --lock-tables=true -u $DB_USER -p$DB_PSWD -h $DB_HOST -P $DB_PORT $DB_NAME | gzip -9 > $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz
+MYSQL_PWD=$DB_PSWD mysqldump --add-drop-table --lock-tables=true -u $DB_USER -h $DB_HOST -P $DB_PORT $DB_NAME | gzip -9 > $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz
 
 # Counting filezie
 FILESIZE="$(ls -lah $DUMP_LOC/$DB_NAME-$DATE_BAK.sql.gz | awk '{print $5}')"
