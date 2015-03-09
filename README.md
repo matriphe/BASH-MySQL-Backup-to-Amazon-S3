@@ -1,5 +1,5 @@
 <h1>BASH MySQL Backup to Amazon S3</h1>
-BASH script for back up MySQL database to Amazon S3. Simply run db.backup.sh from BASH shell.
+BASH script for back up MySQL database to Amazon S3. Simply run `db.backup.sh` from BASH shell. If want to backup all database, just run `all.db.backup.sh`. Make sure the user have privileges to lock tables.
 
 <h2>Requirement</h2>
 
